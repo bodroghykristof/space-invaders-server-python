@@ -39,7 +39,7 @@ def list_all_rooms():
 
 @socketio.on('game_data')
 def stream_game_data(data):
-    # print(data)
+    print("DATA: " + str(data))
     game_data = json.loads(data)
     emit("game_data", data, room=game_data.get('roomId'), include_self=False)
 
