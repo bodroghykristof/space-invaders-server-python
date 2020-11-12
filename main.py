@@ -3,7 +3,7 @@ from flask_socketio import SocketIO, join_room, leave_room, emit
 import json
 from gevent import monkey
 
-# monkey.patch_all()
+monkey.patch_all()
 
 app = Flask(__name__)
 app.debug = True
