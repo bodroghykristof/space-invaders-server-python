@@ -19,7 +19,7 @@ rooms = []
 def create_room(room_name):
     global count
     count += 1
-    # print(str(count) + " joined")
+    print(str(count) + " created")
     rooms.append(Room(count, room_name, datetime.now().strftime("%d/%m/%Y %H:%M:%S")))
     join_room(count)
     emit("set_own_room", count)
@@ -27,11 +27,13 @@ def create_room(room_name):
 
 @socketio.on('join')
 def join_game_room(room_id):
+    print("Joining room "+ str(room_id))
     join_room(room_id)
 
 
 @app.route("/list")
 def list_all_rooms():
+    print("Request received for listing rooms")
     return json.dumps([room.__dict__ for room in rooms])
 
 
@@ -47,11 +49,13 @@ def finish_game(room_id):
     emit("game_over", room=room_id)
     close_room(room_id)
     rooms.remove([room for room in rooms if room.room_id == room_id][0])
-    # print(rooms)
+    print("Owner has exit room: " + str(room_id))
+    print("Currently available rooms: " + str(rooms))
 
 
 @socketio.on('spectator_exit')
 def exit_spectator(room_id):
+    print("Spectator has left room " + str(room_id))
     leave_room(room_id)
 
 
