@@ -30,9 +30,9 @@ def join_game_room(room_id):
     join_room(room_id)
 
 
-@socketio.on('list')
+@app.route("/list")
 def list_all_rooms():
-    emit("room_list", json.dumps([room.__dict__ for room in rooms]))
+    return json.dumps([room.__dict__ for room in rooms])
 
 
 @socketio.on('game_data')
